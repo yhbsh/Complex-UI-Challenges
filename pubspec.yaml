@@ -1,19 +1,16 @@
-name: flutter_ui_challenge_1
-description: A new Flutter project.
-publish_to: "none"
+name: custom_ui_challenges
 version: 0.1.0
 
 environment:
-  sdk: ">=3.1.2 <4.0.0"
+  sdk: 3.1.0
+  flutter: 3.13.0
 
 dependencies:
   flutter:
     sdk: flutter
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.3
 
 flutter:
   uses-material-design: true
