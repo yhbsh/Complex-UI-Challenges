@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'current_trip_period.dart';
-import 'details_page.dart';
+import 'trip_details_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

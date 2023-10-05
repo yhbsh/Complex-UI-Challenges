@@ -11,6 +11,9 @@ class SecondDetailsPage extends StatefulWidget {
 
 class _SecondDetailsPageState extends State<SecondDetailsPage> {
   late double top = 0;
+
+  static const double _initialTop = 150;
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -19,12 +22,20 @@ class _SecondDetailsPageState extends State<SecondDetailsPage> {
         toolbarHeight: 80,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(
-            Icons.close,
-            color: Colors.black,
-          ),
+        automaticallyImplyLeading: false,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(width: 8),
+            IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: const Icon(
+                Icons.close,
+                size: 35,
+                color: Colors.black,
+              ),
+            ),
+          ],
         ),
         actions: [
           Container(
@@ -45,12 +56,12 @@ class _SecondDetailsPageState extends State<SecondDetailsPage> {
       body: GestureDetector(
         onVerticalDragUpdate: (details) {
           final dy = details.delta.dy;
-          if (dy > 0 || top < -80) return;
+          if (dy < 0 || top > 200) return;
 
-          setState(() => top += dy);
+          setState(() => top += 2 * dy);
         },
-        onVerticalDragEnd: (details) {
-          if (top < -80) Navigator.pop(context);
+        onVerticalDragEnd: (_) {
+          if (top > 200) Navigator.of(context).pop();
         },
         child: Container(
           height: double.infinity,
@@ -58,26 +69,30 @@ class _SecondDetailsPageState extends State<SecondDetailsPage> {
           decoration: const BoxDecoration(),
           child: Stack(
             children: [
-              Positioned(
+              AnimatedPositioned(
+                duration: const Duration(milliseconds: 100),
                 left: 20,
-                top: 130 + top,
-                child: Hero(
-                  tag: 'riding',
-                  child: Text(
-                    'Riding through the\nlands of the legends',
-                    style: textTheme.headlineLarge?.copyWith(
-                      height: 1.4,
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+                right: 20,
+                top: _initialTop + top,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Hero(
+                      tag: 'riding',
+                      child: Text(
+                        'Riding through the\nlands of the legends',
+                        style: textTheme.headlineLarge?.copyWith(
+                          height: 1.4,
+                          color: Colors.black,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 20),
+                    const TripDetailsPeople()
+                  ],
                 ),
-              ),
-              Positioned(
-                top: 250 + top,
-                left: 20,
-                child: const TripDetailsPeople(),
               ),
             ],
           ),
